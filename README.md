@@ -18,6 +18,7 @@ scan-framework是一个漏洞批量利用扫描框架，只需要进行简单配
 > * 有一个待扫描的IP或者域名列表
 > * 触发漏洞的页面中有代表漏洞探测成功的特征字符串
 > * 会使用scan-framework的配置文件
+> * 入口文件为cli.py 命令行参数-m
 
 ## 配置文件
 配置文件位于工程中的conf文件夹下：
@@ -71,6 +72,20 @@ Cookie: PHPSESSID=bv2n8m904ggt8nsi9istnm9fg7
 
 
 ```
+
+##命令行参数
+```
+>python cli.py -h
+Usage: cli.py [options]
+
+Options:
+  -h, --help            show this help message and exit
+  -m MODE, --mode=MODE
+```
+选择相应的模式：
+> * -m url 对应URL模式
+> * -m raw 对应RAW模式
+
 ##Bug反馈
 请联系：
 exploitcat@foxmail.com
