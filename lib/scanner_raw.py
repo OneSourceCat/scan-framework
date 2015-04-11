@@ -4,23 +4,30 @@ import sys
 import socket
 import include
 import requests
+import ConfigParser
 from Queue import Queue
 from threading import Thread, Lock
 
 
 class ScannerRawTool:
     def __init__(self, body_list, out_file, scan_rule, res_rule):
+        cf = ConfigParser.ConfigParser()
+        cf.read(include.conf_dir)
+        items = cf.items("main")
+
         self.body_list = body_list
         self.out_file = out_file
         self.scan_rule = scan_rule
         self.res_rule = res_rule
+        # 线程数
+        self.thread_num = int(items[6][1])
 
     '''扫描方法'''
     def scan(self):
         f = open(self.out_file, 'a')
         queue = Queue()
         # 开启8个线程
-        for i in xrange(8):
+        for i in xrange(self.thread_num):
             worker = ScanWorker(queue)
             # 随着主线程的消亡而消亡
             worker.daemon = True

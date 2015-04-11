@@ -2,13 +2,14 @@
 import re
 import include
 import requests
+import ConfigParser
 from Queue import Queue
 from threading import Thread, Lock
 method = None
 
 class ScannerTool:
     def __init__(self, iplist, payload, out_file, scan_rule, res_rule):
-        global METHOD
+        global method
         cf = ConfigParser.ConfigParser()
         cf.read(include.conf_dir)
         items = cf.items("main")
@@ -22,9 +23,9 @@ class ScannerTool:
         # 扫描的payload
         self.payload = payload
         # 线程数
-        self.thread_num = int(items[7][1])
+        self.thread_num = int(items[6][1])
         # 请求方式 post get
-        self.method = items[8][1]
+        self.method = items[7][1]
         method = self.method
 
 
@@ -92,6 +93,7 @@ class ScanWorker(Thread):
                 except Exception, e:
                     print e
                     pass
+                self.queue.task_done()
             # 处理post方式
             if method == "post":
                 url, f, data, scan_rule, res_rule = self.queue.get()
@@ -113,4 +115,4 @@ class ScanWorker(Thread):
                 except Exception, e:
                     print e
                     pass
-            self.queue.task_done()
+                self.queue.task_done()

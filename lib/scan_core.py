@@ -12,8 +12,7 @@ from scanner_raw import ScannerRawTool
 class AbstractScanner():
     def __init__(self, options):
         self.options = options
-        print options.mode
-        print options.payload
+
 
     '''读配置文件获取rule'''
     def get_rule(self):
