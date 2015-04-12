@@ -77,6 +77,8 @@ class ScanWorker(Thread):
                 url, f, scan_rule, res_rule = self.queue.get()
                 try:
                     r = requests.get(url)
+                    if r.status_code != 200:
+                        raise Exception
                     page_content = r.content
                     scan_reg = re.compile(r'%s' % scan_rule)
                     res_reg = re.compile(r'%s' % res_rule)
