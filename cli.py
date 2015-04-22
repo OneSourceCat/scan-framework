@@ -1,9 +1,12 @@
 # coding=utf-8
+
 import os
 import optparse
 import ConfigParser
 import lib.include as include
+
 from lib.scan_core import AbstractScanner
+
 options = None
 arguments = None
 
